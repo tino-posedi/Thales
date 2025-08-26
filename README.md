@@ -1,4 +1,4 @@
-# Thales Technical Components  
+# Thales technical components  
 
 Thales provides software developers in the technical-scientific and industrial fields with a powerful and complete resource for creating programs for data acquisition and evaluation as well as for machine control and monitoring.  
 
