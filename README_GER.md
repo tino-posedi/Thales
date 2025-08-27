@@ -36,6 +36,7 @@ root.mainloop()
 | **SevSeg**       | Siebensegmentanzeige mit zwei steuerbaren LEDs und Einheitsanzeige, Erscheinungsbild anpassbar |
 | **FullSevSeg**   | Einfache Siebensegmentanzeige, alle Kolorierungen frei wählbar |
 | **SevSegSpin**   | Daumenradschalter mit Siebensegmentanzeige, mit/ohne Anschlag |
+| **TextSpin**     | Spin Element mit beliebig vielen Texten, mit/ohne Anschlag |
 | **SlideButton**  | Schiebeschalter mit beliebiger Beschriftung und Farben |
 | **Slider**       | Schieberegler ohne Raststellungen, beliebige Anfangs- und Endwerte |
 | **SelectSlide**  | Schieberegler mit bis zu 20 Raststellungen, frei beschriftbar |
