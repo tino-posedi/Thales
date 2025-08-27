@@ -37,6 +37,7 @@ root.mainloop()
 | **SevSeg**       | Seven-segment display with two controllable LEDs and unit display, customizable appearance |
 | **FullSevSeg**   | Simple seven-segment display, all colors customizable |
 | **SevSegSpin**   | Thumbwheel switch with seven-segment display, with/without stop |
+| **TextSpin**     | Spin element with a variable number of texts, with/without stop |
 | **SlideButton**  | Slide switch with arbitrary labeling and colors |
 | **Slider**       | Slider without detents, arbitrary start and end values |
 | **SelectSlide**  | Slider with up to 20 detents, freely labelable |
