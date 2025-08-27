@@ -4,7 +4,7 @@ import ast
 class TextSpin(tk.Frame):
     def __init__(self, parent, values=None, start=0, wrap="inactive",
                  text="", fill="white", number_fill="black",
-                 width=200, height=35, orientation="right", **kwargs):
+                 width=200, height=40, orientation="right", **kwargs):
         super().__init__(parent, bd=3, relief="raised", **kwargs)
 
         self.raw_values = values 
