@@ -1,4 +1,4 @@
-# Thales technical components  
+# ![thal](https://github.com/user-attachments/assets/9f7889ac-b00e-41a5-812c-60a9d9bd1635) Thales technical components
 
 Thales provides software developers in the technical-scientific and industrial fields with a powerful and complete resource for creating programs for data acquisition and evaluation as well as for machine control and monitoring.  
 
