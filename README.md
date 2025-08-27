@@ -36,8 +36,8 @@ root.mainloop()
 | **MeterPanelH**  | Horizontal panel meter, freely labelable, controllable LEDs, customizable colors, adjustable scale division |
 | **SevSeg**       | Seven-segment display with two controllable LEDs and unit display, customizable appearance |
 | **FullSevSeg**   | Simple seven-segment display, all colors customizable |
-| **SevSegSpin**   | Thumbwheel switch with seven-segment display, with/without stop |
-| **TextSpin**     | Spin element with a variable number of texts, with/without stop |
+| **SevSegSpin**   | Thumbwheel switch with seven-segment display, with or without limiter |
+| **TextSpin**     | Spin element with a variable number of texts, with or without limiter |
 | **SlideButton**  | Slide switch with arbitrary labeling and colors |
 | **Slider**       | Slider without detents, arbitrary start and end values |
 | **SelectSlide**  | Slider with up to 20 detents, freely labelable |
