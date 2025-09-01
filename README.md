@@ -65,6 +65,7 @@ root.mainloop()
 | **Oscillo**      | Fully functional oscilloscope component, fully configurable |
 | **xyGraph**      | Continuous display of incoming measurement values, real-time capable up to a certain speed |
 | **StatChart**    | Chart component for graphical data display, configurable presentation |
+| **CurveSynth**   | Configurable curve editor and chart widget for interactive data visualization |
 | **SmartTimer**   | Timer component with unlimited number of channels |
 | **COMPort**      | Serial communication (port, baud rate, parity, data/stop bits, timeout), asynchronous reading, writing, port management |
 | **PlaySnd**      | Audio output for files, suitable for speech output, messages, warnings |
@@ -73,3 +74,4 @@ root.mainloop()
 | **FormSize**     | Size limitation for forms (min/max independently selectable) |
 | **IniEdit**      | Read/write Windows `.ini` files, supports creating and modifying entries |
 | **VersInfo**     | Version/program info component, extends window title with version, company, author; values changeable/retrievable at runtime |
+| **Spy**          | Gag feature, the eyes constantly follow the mouse cursor |
