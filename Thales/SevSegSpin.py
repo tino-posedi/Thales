@@ -4,22 +4,24 @@ import os
 
 class RoundedDigitCanvas(tk.Canvas):
     def __init__(self, parent, font_path=None):
-        self.canvas_width = 80
-        self.canvas_height = 100
+        self.canvas_width = 40 
+        self.canvas_height = 50 
         super().__init__(parent, width=self.canvas_width, height=self.canvas_height, bg='SystemButtonFace', highlightthickness=0)
 
         self.digit = ''
         self.font_path = "DSEG7Classic-Regular.ttf"
-        self.font = self.load_dseg_font(font_path, 48)
+        self.font = self.load_dseg_font(font_path, 24)  
 
-        self.rect_margin = 5
-        self.radius = 20
+        self.rect_margin = 3 
+        self.radius = 10      
 
         self.draw_background()
 
         center_x = self.canvas_width // 2
         center_y = self.canvas_height // 2
-        self.digit_id = self.create_text(center_x, center_y, text=self.digit, font=("DSEG7 Classic", 48, "bold"), fill='#ffff00', anchor='center')
+        self.digit_id = self.create_text(center_x, center_y, text=self.digit,
+                                         font=("DSEG7 Classic", 24, "bold"),
+                                         fill='#ffff00', anchor='center')
 
     def draw_background(self):
         x1 = self.rect_margin
@@ -59,21 +61,21 @@ class RoundedDigitCanvas(tk.Canvas):
 
 class SevSegSpin(tk.Frame):
     def __init__(self, parent, wrap="inactive", start_value=1, end_value=9, font_path=None):
-        super().__init__(parent, bg='SystemButtonFace', bd=3, relief='raised', padx=5, pady=5)
+        super().__init__(parent, bg='SystemButtonFace', bd=2, relief='raised', padx=3, pady=3) 
 
         self.wrap = wrap
         self.min_value = start_value
         self.max_value = end_value
         self.value = start_value
 
-        self.up_btn = tk.Button(self, text='▲', command=self.increment)
+        self.up_btn = tk.Button(self, text='▲', command=self.increment, height=1)
         self.up_btn.pack(side='top', fill='x')
 
         self.display = RoundedDigitCanvas(self, font_path=font_path)
         self.display.pack()
         self.display.update_digit(self.value)
 
-        self.down_btn = tk.Button(self, text='▼', command=self.decrement)
+        self.down_btn = tk.Button(self, text='▼', command=self.decrement, height=1)
         self.down_btn.pack(side='bottom', fill='x')
 
     def increment(self):
@@ -95,13 +97,13 @@ class SevSegSpin(tk.Frame):
 
 if __name__ == '__main__':
     root = tk.Tk()
-    root.title("Rounded 7-Segment Counter")
+    root.title("Rounded 7-Segment Counter (Smaller)")
     
     def print_state():
         print("Current step: ", counter.return_value())
 
     counter = SevSegSpin(root, wrap="inactive", start_value=1, end_value=9)
-    counter.pack(padx=20, pady=20)
+    counter.pack(padx=10, pady=10)
     
     print_state()
     root.mainloop()
