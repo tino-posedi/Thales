@@ -43,3 +43,5 @@ from VersInfo import VersInfo
 from IniEdit import IniEdit
 from COMPort import COMPort
 from TextSpin import TextSpin
+from Spy import Spy
+from CurveSynth import CurveSynth
