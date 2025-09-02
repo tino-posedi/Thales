@@ -9,14 +9,18 @@ RADIUS = int(100 * SCALE)
 
 class Poti10K(Frame):
     def __init__(self, parent, fill_outer_knob="#b0f0f0", fill_inner_knob="#00bfbf",
-                 preset="inactive", **kwargs):
+                 preset="inactive", start_value=0.0, end_value=10.0, **kwargs):
         super().__init__(parent, width=WIDTH, height=226, **kwargs, relief="raised", bd=3)
 
         self.fill_outer_knob = fill_outer_knob
         self.fill_inner_knob = fill_inner_knob
-        self.preset_mode = preset 
+        self.preset_mode = preset
 
-        self.value = 0.0
+        self.start_value = start_value
+        self.end_value = end_value
+        self.value_range = self.end_value - self.start_value
+
+        self.value = self.start_value
         self.angle = 135
         self.fine_angle = 135
         self.dragging_triangle = False
@@ -72,8 +76,14 @@ class Poti10K(Frame):
     def preset_action(self):
         self.angle = 135
         self.fine_angle = 135
-        self.value = round((self.angle - 135) / 270 * 10, 2)
+        self.value = self.start_value
         self.update_display()
+
+    def angle_to_value(self, angle):
+        return self.start_value + (angle - 135) / 270 * self.value_range
+
+    def value_to_angle(self, value):
+        return 135 + (value - self.start_value) / self.value_range * 270
 
     def led_g_on(self):
         self.led_g_state = 'on'
@@ -101,13 +111,13 @@ class Poti10K(Frame):
 
     def blink_leds(self):
         if self.led_g_state != 'blink' and self.led_r_state != 'blink':
-            return  
+            return
         self.blink_state = not self.blink_state
         self.update_display()
         self.after(700, self.blink_leds)
 
     def init_display(self):
-        self.value_label = Label(self, text="0.00", font=self.dseg_font,
+        self.value_label = Label(self, text=f"{self.start_value:.2f}", font=self.dseg_font,
                                  fg="cyan", bg="black", bd=1, relief="flat", width=5)
         self.value_label.place(x=CENTER_X, y=int(268 * SCALE), anchor="n")
 
@@ -121,7 +131,7 @@ class Poti10K(Frame):
             green_color = '#006000' if self.blink_state else '#00FF00'
 
         size = int(20 * SCALE)
-        y = 10  
+        y = 10
 
         self.canvas.create_oval(10, y, 10 + size, y + size, fill=red_color)
         self.canvas.create_oval(195, y, 195 + size, y + size, fill=green_color)
@@ -130,16 +140,16 @@ class Poti10K(Frame):
         arc_width = int(10 * SCALE)
         self.canvas.create_arc(CENTER_X - RADIUS, CENTER_Y - RADIUS, CENTER_X + RADIUS, CENTER_Y + RADIUS,
                                start=-45, extent=270, style=ARC, width=arc_width, outline='gray')
-        for i in range(101):
-            angle_deg = 135 + (270 / 100) * i
+        for i in range(11):  
+            value = int(round(self.start_value + i * (self.value_range / 10)))  
+            angle_deg = 135 + (270 / 10) * i
             angle_rad = math.radians(angle_deg)
             outer = self.polar_to_cartesian(RADIUS, angle_rad)
-            length = 10 * SCALE if i % 10 == 0 else 5 * SCALE
+            length = 10 * SCALE
             inner = self.polar_to_cartesian(RADIUS - length, angle_rad)
-            self.canvas.create_line(*outer, *inner, fill='black' if i % 10 == 0 else 'gray')
-            if i % 10 == 0:
-                text_pos = self.polar_to_cartesian(RADIUS + 20 * SCALE, angle_rad)
-                self.canvas.create_text(*text_pos, text=str(i // 10), font=("Arial", int(15 * SCALE)))
+            self.canvas.create_line(*outer, *inner, fill='black')
+            text_pos = self.polar_to_cartesian(RADIUS + 20 * SCALE, angle_rad)
+            self.canvas.create_text(*text_pos, text=f"{value}", font=("Arial", int(12 * SCALE)))
 
     def polar_to_cartesian(self, radius, angle_rad):
         x = CENTER_X + radius * math.cos(angle_rad)
@@ -174,7 +184,7 @@ class Poti10K(Frame):
         self.draw_leds()
         self.draw_scale()
         self.draw_knob()
-        self.value_label.config(text=f"{self.value:.2f}", font=("DSEG7 Classic", 17, "bold"))
+        self.value_label.config(text=f"{self.value:.2f}", font=("DSEG7 Classic", 17, "bold"))  
 
     def start_drag_triangle(self, event):
         self.dragging_triangle = True
@@ -196,7 +206,7 @@ class Poti10K(Frame):
                     angle += 360
                 angle = max(135, min(angle, 405))
                 self.angle = angle
-                self.value = round((self.angle - 135) / 270 * 10, 2)
+                self.value = self.angle_to_value(self.angle)
                 self.update_display()
 
     def drag_fine(self, event):
@@ -217,7 +227,7 @@ class Poti10K(Frame):
                 self.fine_angle = angle
                 self.angle += delta_angle * fine_sensitivity
                 self.angle = max(135, min(self.angle, 405))
-                self.value = round((self.angle - 135) / 270 * 10, 2)
+                self.value = self.angle_to_value(self.angle)
                 self.update_display()
 
     def return_value(self):
@@ -226,7 +236,7 @@ class Poti10K(Frame):
 if __name__ == "__main__":
     root = Tk()
     root.title("Potentiometer with Layout Flexibility")
-    poti = Poti10K(root, preset="active")
+    poti = Poti10K(root, preset="active", start_value=140, end_value=150)
     poti.pack(padx=10, pady=10)
 
     poti.led_g_blink()
