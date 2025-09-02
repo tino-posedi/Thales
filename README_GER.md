@@ -73,4 +73,4 @@ root.mainloop()
 | **FormSize**     | Größenbegrenzung für Formulare (min./max. unabhängig wählbar) |
 | **IniEdit**      | Lesen/Schreiben von Windows-`.ini`-Dateien, unterstützt beim Erstellen und Verändern |
 | **VersInfo**     | Komponente für Version/Programminfo, ergänzt Fenstertitel um Version, Firma, Autor; Werte zur Laufzeit änder-/abrufbar |
-| **Spy**          | Gag Komponente, die Augen folgen immer dem Mauskursor. |
+| **Spy**          | Gag Komponente, die Augen folgen immer dem Mauskursor |
