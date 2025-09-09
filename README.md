@@ -66,6 +66,7 @@ root.mainloop()
 | **xyGraph**      | Continuous display of incoming measurement values, real-time capable up to a certain speed |
 | **StatChart**    | Chart component for graphical data display, configurable presentation |
 | **CurveSynth**   | Configurable curve editor and chart widget for interactive data visualization |
+| **BitWin**       | Small tool window similar to a hint for displaying mouse cursor–dependent information |
 | **SmartTimer**   | Timer component with unlimited number of channels |
 | **COMPort**      | Serial communication (port, baud rate, parity, data/stop bits, timeout), asynchronous reading, writing, port management |
 | **PlaySnd**      | Audio output for files, suitable for speech output, messages, warnings |
