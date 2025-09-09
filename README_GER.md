@@ -1,7 +1,7 @@
 # ![thal](https://github.com/user-attachments/assets/9f7889ac-b00e-41a5-812c-60a9d9bd1635) Thales technische Komponenten
 Thales gibt dem Softwareentwickler aus dem technisch-wissenschaftlichen und industriellen Bereich eine komplette und leistungsfähige Resource zur Erstellung von Programmen in der Messdatenerfassung und Auswertung als auch für Maschinensteuerung und Überwachung in die Hand.
 
-<img width="1691" height="36" alt="image" src="https://github.com/user-attachments/assets/992e2259-6ecd-4665-8901-1df2f3d0573b" />
+<img width="1728" height="38" alt="image" src="https://github.com/user-attachments/assets/518a2893-aa5d-4730-9f67-6182430e32f6" />
 
 ## 🚀 Beispiel – Meter120  
 
