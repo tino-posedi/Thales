@@ -2,7 +2,7 @@
 
 Thales provides software developers in the technical-scientific and industrial fields with a complete and powerful resource for creating programs for data acquisition and evaluation as well as for machine control and monitoring.  
 
-<img width="1691" height="36" alt="image" src="https://github.com/user-attachments/assets/6d226bbc-bb52-4789-bd0f-9b384d55dfad" />
+<img width="1728" height="38" alt="image" src="https://github.com/user-attachments/assets/0ff2f66e-a6e6-40af-ba2f-8ab75bff19ca" />
 
 ## 🚀 Example – Meter120  
 
