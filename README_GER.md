@@ -27,6 +27,7 @@ root.mainloop()
 
 | Komponente       | Beschreibung |
 |------------------|--------------|
+| **Meter90**      | Panel Meter mit 90°-Skala, einstellbarer Dämpfung, digitaler Messwertanzeige, steuerbare LEDs, frei beschriftbar, Farben frei wählbar |
 | **Meter120**     | Panel Meter mit 120°-Skala, einstellbarer Dämpfung, digitaler Messwertanzeige, Schleppzeiger, steuerbare LEDs, frei beschriftbar, Farben frei wählbar |
 | **Meter180**     | Panel Meter mit 180°-Skala, einstellbarer Dämpfung, digitaler Messwertanzeige, Schleppzeiger, steuerbare LEDs, frei beschriftbar, Farben frei wählbar |
 | **Meter270**     | Panel Meter mit 270°-Skala, einstellbarer Dämpfung, digitaler Messwertanzeige, frei beschriftbar, Farben frei wählbar |
