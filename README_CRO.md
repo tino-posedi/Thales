@@ -27,6 +27,7 @@ root.mainloop()
 
 | Komponenta       | Opis |
 |------------------|--------------|
+| **Meter90**      | Panel mjerač s 90° skalom, podesivim prigušenjem, digitalnim prikazom mjerenja, upravljivim LED-icama, slobodno opisiv, boje po izboru |
 | **Meter120**     | Panel mjerač s 120° skalom, podesivim prigušenjem, digitalnim prikazom mjerenja, kazaljkom, upravljivim LED-icama, slobodno opisiv, boje po izboru |
 | **Meter180**     | Panel mjerač s 180° skalom, podesivim prigušenjem, digitalnim prikazom mjerenja, kazaljkom, upravljivim LED-icama, slobodno opisiv, boje po izboru |
 | **Meter270**     | Panel mjerač s 270° skalom, podesivim prigušenjem, digitalnim prikazom mjerenja, slobodno opisiv, boje po izboru |
