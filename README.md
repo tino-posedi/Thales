@@ -28,6 +28,7 @@ root.mainloop()
 
 | Component        | Description |
 |------------------|-------------|
+| **Meter90**      | Panel meter with 90° scale, adjustable damping, digital value display, controllable LEDs, freely labelable, customizable colors |
 | **Meter120**     | Panel meter with 120° scale, adjustable damping, digital value display, drag pointer, controllable LEDs, freely labelable, customizable colors |
 | **Meter180**     | Panel meter with 180° scale, adjustable damping, digital value display, drag pointer, controllable LEDs, freely labelable, customizable colors |
 | **Meter270**     | Panel meter with 270° scale, adjustable damping, digital value display, freely labelable, customizable colors |
