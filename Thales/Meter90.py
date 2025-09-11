@@ -184,7 +184,6 @@ class Meter90:
         else:
             self.update_needle(angle)
 
-        # Peak logic
         if self.peak == "active":
             if value > self.highest_value:
                 self.highest_value = value
@@ -193,7 +192,6 @@ class Meter90:
                 self.canvas.delete("peak")
                 self.draw_peak(tip_x, tip_y)
 
-        # Drag logic
         if self.drag == "active":
             if value > self.drag_value:
                 self.drag_value = value
@@ -324,3 +322,4 @@ if __name__ == "__main__":
     schieber.pack()
 
     root.mainloop()
+
