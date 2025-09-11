@@ -98,8 +98,6 @@ class Meter90:
         self.canvas.create_image(0, 0, anchor=NW, image=self.bg_image)
         self.canvas.bg_image = self.bg_image
 
-
-    
     def draw_meter(self):
 
         radius = 12 if self.style == "roundrect" else 0
@@ -175,17 +173,36 @@ class Meter90:
         self.canvas.create_oval(10, 10, 25, 25, fill=red_color, outline='black')
         self.canvas.create_oval(30, 10, 45, 25, fill=green_color, outline='black')
     
+    
     def set_value(self, value):
         value = max(0, min(100, value))
-
         angle = self.arc_start_angle - (value / 100) * self.arc_span
-
         self.canvas.itemconfig(self.display_text, text=f"{value:05.2f}")
 
         if self.damp == "active":
             self.smooth_move_needle(angle)
         else:
             self.update_needle(angle)
+
+        # Peak logic
+        if self.peak == "active":
+            if value > self.highest_value:
+                self.highest_value = value
+                tip_x = self.center_x + self.needle_offset_x + 125 * math.cos(math.radians(angle))
+                tip_y = self.center_y + self.needle_offset_y - 125 * math.sin(math.radians(angle))
+                self.canvas.delete("peak")
+                self.draw_peak(tip_x, tip_y)
+
+        # Drag logic
+        if self.drag == "active":
+            if value > self.drag_value:
+                self.drag_value = value
+                tip_x = self.center_x + self.needle_offset_x + 125 * math.cos(math.radians(angle))
+                tip_y = self.center_y + self.needle_offset_y - 125 * math.sin(math.radians(angle))
+                self.canvas.delete("drag_peak")
+                self.draw_peak(tip_x, tip_y, tag="drag_peak", color="lightgreen")
+            self.canvas.after(1000, self.decrease_drag)
+
 
     def smooth_move_needle(self, target_angle):
         diff = target_angle - self.needle_angle
@@ -231,7 +248,38 @@ class Meter90:
         )
 
         self.canvas.tag_raise("needle")
+        
+    def draw_peak(self, x, y, tag="peak", color="yellow"):
+        peak_size = 13
+        angle = math.degrees(math.atan2(self.center_y - y, x - self.center_x))
+        offset_x = (x - self.center_x) * 1.0
+        offset_y = (y - self.center_y) * 1.0
+        peak_x = self.center_x + offset_x
+        peak_y = self.center_y + offset_y
+        tip_x, tip_y = peak_x, peak_y
+        left_x = tip_x + peak_size * math.cos(math.radians(angle - 45))
+        left_y = tip_y - peak_size * math.sin(math.radians(angle - 45))
+        right_x = tip_x + peak_size * math.cos(math.radians(angle + 45))
+        right_y = tip_y - peak_size * math.sin(math.radians(angle + 45))
+        self.canvas.create_polygon(left_x, left_y, tip_x, tip_y, right_x, right_y,
+                                   fill=color, outline='black', tags=tag)
 
+    def decrease_drag(self):
+        if self.drag_value > 0:
+            self.drag_value -= 1
+            angle = self.arc_start_angle - (self.drag_value / 100) * self.arc_span
+            tip_x = self.center_x + self.needle_offset_x + 125 * math.cos(math.radians(angle))
+            tip_y = self.center_y + self.needle_offset_y - 125 * math.sin(math.radians(angle))
+            self.canvas.delete("drag_peak")
+            self.draw_peak(tip_x, tip_y, tag="drag_peak", color="lightgreen")
+            self.drag_timer = self.canvas.after(100, self.decrease_drag)
+        else:
+            self.drag_timer = self.canvas.after(2000, self.hide_drag)
+
+    def hide_drag(self):
+        self.canvas.delete("drag_peak")
+    
+    
     def blink_led(self, led):
         if led == "r":
             self.led_r_state = not self.led_r_state
@@ -251,7 +299,7 @@ if __name__ == "__main__":
 
     meter90 = Meter90(root, unit="mA", green_start=70, green_end=100,
                       yellow_start=40, yellow_end=70,
-                      red_start=0, red_end=40, style="roundrect")
+                      red_start=0, red_end=40, style="roundrect", peak="active", drag="active")
     meter90.frame.place(x=20, y=20)
 
     def update_needle(value):
