@@ -9,7 +9,7 @@ class Meter90:
                  red_start=80, red_end=100, peak="inactive", drag="inactive",
                  damp="inactive", unit="", fill="#000079", needle_fill="red",
                  scala_fill="white", scala_number_fill="white", val_blink="inactive",
-                 style="roundrect"):
+                 style="roundrect", start_value=0, end_value=100):
 
         frame_width = 200
         frame_height = 200
@@ -36,12 +36,14 @@ class Meter90:
 
         self.style = style
 
+        self.start_value = start_value
+        self.end_value = end_value
+
         self.frame = tk.Frame(master, relief="raised", bd=3, width=frame_width, height=frame_height)
         self.frame.pack_propagate(True)
 
         self.canvas = tk.Canvas(self.frame, width=175, height=175, bg="systembuttonface", highlightthickness=0)
-
-        self.canvas.place(x = 10, y = 10)
+        self.canvas.place(x=10, y=10)
 
         self.center_x = frame_width // 1.4
         self.center_y = frame_height - 50
@@ -64,7 +66,7 @@ class Meter90:
         self.needle = None
 
         self.draw_meter()
-        self.set_value(0)
+        self.set_value(self.start_value)
 
     def led_r_on(self):
         self.led_r_state = True
@@ -99,7 +101,6 @@ class Meter90:
         self.canvas.bg_image = self.bg_image
 
     def draw_meter(self):
-
         radius = 12 if self.style == "roundrect" else 0
         self.draw_rounded_background(fill=self.fill, radius=radius)
 
@@ -126,17 +127,21 @@ class Meter90:
         if self.red_start != self.red_end:
             draw_zone(self.red_start, self.red_end, "red")
 
-        for i in range(11):
-            angle = 180 - (i * 9)
+        # Draw scale ticks and numbers dynamically using start_value and end_value
+        num_divisions = 10
+        for i in range(num_divisions + 1):
+            angle = 180 - (i / num_divisions) * 90
+
             x1 = self.center_x + offset + tick_outer * math.cos(math.radians(angle))
             y1 = self.center_y + offset - tick_outer * math.sin(math.radians(angle))
             x2 = self.center_x + offset + tick_inner * math.cos(math.radians(angle))
             y2 = self.center_y + offset - tick_inner * math.sin(math.radians(angle))
             self.canvas.create_line(x1, y1, x2, y2, fill=self.scala_fill, width=2)
 
+            tick_value = self.start_value + (i / num_divisions) * (self.end_value - self.start_value)
             num_x = self.center_x + offset + num_radius * math.cos(math.radians(angle))
             num_y = self.center_y + offset - num_radius * math.sin(math.radians(angle))
-            self.canvas.create_text(num_x, num_y, text=str(i * 10),
+            self.canvas.create_text(num_x, num_y, text=f"{tick_value:.0f}",
                                     font=("Arial", 10), fill=self.scala_number_fill)
 
         disp_offset_x = -20     
@@ -175,9 +180,12 @@ class Meter90:
     
     
     def set_value(self, value):
-        value = max(0, min(100, value))
-        angle = self.arc_start_angle - (value / 100) * self.arc_span
-        self.canvas.itemconfig(self.display_text, text=f"{value:05.2f}")
+        # Clamp value and calculate percentage for needle
+        clamped_value = max(self.start_value, min(self.end_value, value))
+        value_percentage = (clamped_value - self.start_value) / (self.end_value - self.start_value) * 100
+
+        angle = self.arc_start_angle - (value_percentage / 100) * self.arc_span
+        self.canvas.itemconfig(self.display_text, text=f"{clamped_value:05.2f}")
 
         if self.damp == "active":
             self.smooth_move_needle(angle)
@@ -185,16 +193,16 @@ class Meter90:
             self.update_needle(angle)
 
         if self.peak == "active":
-            if value > self.highest_value:
-                self.highest_value = value
+            if clamped_value > self.highest_value:
+                self.highest_value = clamped_value
                 tip_x = self.center_x + self.needle_offset_x + 125 * math.cos(math.radians(angle))
                 tip_y = self.center_y + self.needle_offset_y - 125 * math.sin(math.radians(angle))
                 self.canvas.delete("peak")
                 self.draw_peak(tip_x, tip_y)
 
         if self.drag == "active":
-            if value > self.drag_value:
-                self.drag_value = value
+            if clamped_value > self.drag_value:
+                self.drag_value = clamped_value
                 tip_x = self.center_x + self.needle_offset_x + 125 * math.cos(math.radians(angle))
                 tip_y = self.center_y + self.needle_offset_y - 125 * math.sin(math.radians(angle))
                 self.canvas.delete("drag_peak")
@@ -276,8 +284,7 @@ class Meter90:
 
     def hide_drag(self):
         self.canvas.delete("drag_peak")
-    
-    
+
     def blink_led(self, led):
         if led == "r":
             self.led_r_state = not self.led_r_state
@@ -296,14 +303,15 @@ if __name__ == "__main__":
     root.geometry("800x600")
 
     meter90 = Meter90(root, unit="mA", green_start=70, green_end=100,
-                      yellow_start=40, yellow_end=70,
-                      red_start=0, red_end=40, style="roundrect", peak="active", drag="active")
+                      yellow_start=5, yellow_end=70,
+                      red_start=0, red_end=5, style="roundrect",
+                      peak="inactive", drag="inactive", start_value=5.0, end_value=24)
     meter90.frame.place(x=20, y=20)
 
     def update_needle(value):
         meter90.set_value(float(value))
         
-        if(float(value) > 40):
+        if float(value) > 40:
             meter90.led_r_off()
             meter90.led_g_on()
         else:
@@ -312,8 +320,8 @@ if __name__ == "__main__":
 
     schieber = Scale(
         root,
-        from_=0.0,
-        to=100.0,
+        from_=-10.0,
+        to=200.0,
         orient=HORIZONTAL,
         resolution=0.01,
         command=update_needle,
@@ -322,4 +330,3 @@ if __name__ == "__main__":
     schieber.pack()
 
     root.mainloop()
-
