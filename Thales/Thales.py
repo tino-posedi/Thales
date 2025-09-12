@@ -45,3 +45,6 @@ from COMPort import COMPort
 from TextSpin import TextSpin
 from Spy import Spy
 from CurveSynth import CurveSynth
+from BitWin import BitWin
+from Meter90 import Meter90
+
