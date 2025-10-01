@@ -118,7 +118,7 @@ class Poti10K(Frame):
 
     def init_display(self):
         self.value_label = Label(self, text=f"{self.start_value:.2f}", font=self.dseg_font,
-                                 fg="cyan", bg="black", bd=1, relief="flat", width=5)
+                                 fg="lime", bg="black", bd=1, relief="flat", width=5)
         self.value_label.place(x=CENTER_X, y=int(268 * SCALE), anchor="n")
 
     def draw_leds(self):
@@ -236,7 +236,7 @@ class Poti10K(Frame):
 if __name__ == "__main__":
     root = Tk()
     root.title("Potentiometer with Layout Flexibility")
-    poti = Poti10K(root, preset="active", start_value=140, end_value=150)
+    poti = Poti10K(root, preset="active", start_value=0, end_value=150)
     poti.pack(padx=10, pady=10)
 
     poti.led_g_blink()
